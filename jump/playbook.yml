@@ -1,0 +1,22 @@
+---
+- hosts: jump
+  remote_user: root
+  tasks:
+    - name: "remove debian user"
+      user:
+        remove: yes
+        state: absent
+        name: debian
+
+    - name: "create users"
+      user:
+        state: present
+        name: "{{ item }}"
+        shell: /bin/bash
+      with_items:
+        - "jfader"
+
+    - name: deploy public key JFA
+      authorized_key:
+        key: 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIRAzjzasfdfp6sRL9fJgTufLy0TbnQs/YR6di0iIpd3lhebLgoT8JFdVoijNlK7vENGoAUW1IeUPJilpEaCVF0= jfader@fader-t510'
+        user: jfader
