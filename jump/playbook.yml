@@ -20,3 +20,20 @@
       authorized_key:
         key: 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIRAzjzasfdfp6sRL9fJgTufLy0TbnQs/YR6di0iIpd3lhebLgoT8JFdVoijNlK7vENGoAUW1IeUPJilpEaCVF0= jfader@fader-t510'
         user: jfader
+
+    - name: "add repo for ansible"
+      apt_repository:
+        state: present
+        repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+
+    - name: "add key for ansible-repo"
+      apt_key:
+        state: present
+        id: 93C4A3FD7BB9C367
+        keyserver: keyserver.ubuntu.com
+
+    - name: "install ansible"
+      apt:
+        update_cache: yes
+        name: ansible
+        state: latest
